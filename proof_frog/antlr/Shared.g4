@@ -142,7 +142,6 @@ SET: 'Set';
 BOOL: 'Bool';
 VOID: 'Void';
 INTTYPE: 'Int';
-VOID: 'Void';
 MAP: 'Map';
 RETURN: 'return';
 IMPORT: 'import';
