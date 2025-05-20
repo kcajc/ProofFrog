@@ -1144,7 +1144,7 @@ class ExpandTupleTransformer(Transformer):
                             tuple_value,
                         )
                     )
-            # Asssigning to a tuple element means assigning to that one element
+            # Assigning to a tuple element means assigning to that one element
             elif (
                 isinstance(statement, (frog_ast.Assignment, frog_ast.Sample))
                 and isinstance(statement.var, frog_ast.ArrayAccess)
