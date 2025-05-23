@@ -828,18 +828,13 @@ def pretty_print(program: str) -> str:
 
 
 def expand_tuple_type(the_type: BinaryOperation) -> list[Type]:
-    unfolded_types: list[Type] = []
-    expanded_type: Type | Expression = the_type
-    while isinstance(expanded_type, BinaryOperation):
-        if expanded_type.operator != BinaryOperators.MULTIPLY:
-            raise ValueError("Tuple type must use multiplication operator")
-        left_expr = expanded_type.left_expression
-        if not isinstance(left_expr, Type):
+    def expand(expr: Expression) -> list[Type]:
+        if isinstance(expr, BinaryOperation):
+            if expr.operator != BinaryOperators.MULTIPLY:
+                raise ValueError("Tuple type must use multiplication operator")
+            return expand(expr.left_expression) + expand(expr.right_expression)
+        elif isinstance(expr, Type):
+            return [expr]
+        else:
             raise ValueError("Tuple type has non-type components")
-        unfolded_types.append(left_expr)
-        expanded_type = expanded_type.right_expression
-    if not isinstance(expanded_type, Type):
-        raise ValueError("Tuple type has non-type components")
-    assert isinstance(expanded_type, Type)
-    unfolded_types.append(expanded_type)
-    return unfolded_types
+    return expand(the_type)
