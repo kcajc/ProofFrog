@@ -562,9 +562,6 @@ class ProofEngine:
                     + reduction_initialize.block
                 )
             reduction_initialize.signature.parameters = []
-            reduction_initialize.signature.return_type = (
-                challenger_initialize.signature.return_type
-            )
             reduction_initialize = visitors.InlineTransformer(
                 {("challenger", "Initialize"): challenger_initialize}
             ).transform(reduction_initialize)
